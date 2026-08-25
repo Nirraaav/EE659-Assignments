@@ -249,6 +249,8 @@ body {
 .sb-item .svg-icon { flex: none; width: 17px; height: 17px; }
 .sb-item span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
+.window.no-sidebar .sidebar { display: none; }
+
 .content { flex: 1; min-width: 0; }
 
 /* ---------- items ---------- */
@@ -390,7 +392,7 @@ body {
 @media (max-width: 780px) {
   body { padding: 0; }
   .window { min-height: 100vh; border: 0; border-radius: 0; box-shadow: none; }
-  .sidebar, .hint { display: none; }
+  .sidebar, .hint, #sidebar-btn { display: none; }
 }
 @media (max-width: 480px) {
   [data-view="list"] .listhead, [data-view="list"] .item a { grid-template-columns: 24px minmax(0, 1fr) 88px; }
@@ -402,6 +404,7 @@ body {
 <h1 class="sr-only">Images</h1>
 <div class="window">
 <header class="headerbar">
+<button class="btn" type="button" id="sidebar-btn" aria-pressed="true" aria-label="Toggle sidebar" title="Toggle sidebar (F9)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1.8" y="2.8" width="12.4" height="10.4" rx="2"/><path d="M6.4 2.8v10.4"/></svg></button>
 <div class="linked"><a class="btn" href="../index.html" aria-label="Back" title="Back"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3 5 8l5 5"/></svg></a><button class="btn" type="button" disabled aria-label="Forward"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m6 3 5 5-5 5"/></svg></button></div>
 <nav class="pathbar" aria-label="Location"><a href="../../index.html">Assignments</a><span class="sep">/</span><a href="../index.html">Assignment-4</a><span class="sep">/</span><span class="current" aria-current="page">Images</span></nav>
 <div class="hb-end"><button class="btn" type="button" id="search-btn" aria-expanded="false" aria-label="Search this folder" title="Search (Ctrl+F)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="7" cy="7" r="4.6"/><path d="m10.6 10.6 3.2 3.2"/></svg></button><div class="linked"><button class="btn active" type="button" data-set-view="grid" aria-pressed="true" aria-label="Icon view" title="Icon view"><svg viewBox="0 0 16 16" fill="currentColor"><rect x="2" y="2" width="5" height="5" rx="1.3"/><rect x="9" y="2" width="5" height="5" rx="1.3"/><rect x="2" y="9" width="5" height="5" rx="1.3"/><rect x="9" y="9" width="5" height="5" rx="1.3"/></svg></button><button class="btn" type="button" data-set-view="list" aria-pressed="false" aria-label="List view" title="List view"><svg viewBox="0 0 16 16" fill="currentColor"><rect x="2" y="3" width="2.4" height="2.4" rx=".8"/><rect x="6" y="3.4" width="8" height="1.6" rx=".8"/><rect x="2" y="6.8" width="2.4" height="2.4" rx=".8"/><rect x="6" y="7.2" width="8" height="1.6" rx=".8"/><rect x="2" y="10.6" width="2.4" height="2.4" rx=".8"/><rect x="6" y="11" width="8" height="1.6" rx=".8"/></svg></button></div></div>
@@ -416,7 +419,7 @@ body {
 <main class="content" id="content" data-view="grid">
 <div class="listhead"><span></span><span>Name</span><span>Size</span><span>Modified</span></div>
 <ul class="items">
-<li class="item file" data-name="q2.png"><a href="Q2.png" title="Q2.png — 63.0 kB — 27 Oct 2024  15:18"><span class="icon thumb" style="--type:var(--c-pink)"><svg class="svg-icon" viewBox="0 0 52 64" aria-hidden="true"><path fill="var(--page)" stroke="var(--edge)" d="M4.5 6.5a4 4 0 0 1 4-4h22l17 17v38a4 4 0 0 1-4 4h-35a4 4 0 0 1-4-4z"/><path fill="var(--page-fold)" d="M30.5 2.5l17 17H34.5a4 4 0 0 1-4-4z"/><rect x="4.5" y="38" width="43" height="15" rx="1.5" fill="var(--type)"/></svg><span class="ext">PNG</span><img src="Q2.png" alt="" loading="lazy" onerror="this.remove()"></span><span class="label">Q2.png</span><span class="meta size">63.0 kB</span><span class="meta date">27 Oct 2024  15:18</span></a></li>
+<li class="item file" data-name="q2.png"><a href="Q2.png" title="Q2.png — 63.0 kB — 27 Oct 2024  15:18"><span class="icon thumb" style="--type:var(--c-pink)"><svg class="svg-icon" viewBox="0 0 52 64" aria-hidden="true"><path fill="var(--page)" stroke="var(--edge)" d="M4.5 6.5a4 4 0 0 1 4-4h22l17 17v38a4 4 0 0 1-4 4h-35a4 4 0 0 1-4-4z"/><path fill="var(--page-fold)" d="M30.5 2.5l17 17H34.5a4 4 0 0 1-4-4z"/><rect x="4.5" y="38" width="43" height="15" rx="1.5" fill="var(--type)"/></svg><span class="ext">PNG</span><img src="data:image/webp;base64,UklGRjIEAABXRUJQVlA4ICYEAAAwGQCdASqAAIAAPpVGnUulo6MipZF62LASiWcA1OnESZ7YDb498a3lVpeIoCWFzOvJm9c/aAKvp4xYgZPEM58ALUmV0zJ/clX3hU8xbt6ABBUCCFCVM+0jxWTBvsksWv3WUQPl0AojtW3X61+glIDoU98Tyh6Z06JFW13M3n4/r8ReDmLy+6YhC4dTQCyrWNZ2IbPwB79ZiRhLP/MG558BObLj/9xGXirmU39yhFWUBhUdHlzYbgvE/6l6OpGbe0pJ2UegwQ7DuXCm9qItpmWvcwAA/vq+myO5KkmTLkzEZ/x1x/yB7/tB9/Y8tZLIRyT+OTWM4z2+Zys2cq6bVDmkFedf5mYGIwKNrMmMd6hiof3WezFu3/uosKqAxHQtXXmqvEunpC4bqX8cSvp9RM6NIo4u7yiGnOKnhIMHaVpK21TkGWLBYEf8+DKvfHlHMq7yXWxtXCyobsNRoa/Dr7vaEmcdzI+uyKtLdb/5JyqrKsopPuyuZxVGPyqiVqiG/Ku0ENHANQr8nBNivVYcRdHQtFfofRqZ4191yNNDSD6aTAzwT7AUHS5OFvhaZRIcEWG/FU5bl+69HZTHdQrjLys/7k6hNQ5cBHBCwB8nW+23I6OGaXI6AZUsD9bK1DiwByIWmV+cOI65425+lg3d6Ta983YW7ZWsQa6YOUnCcJfxB8K6BBLnVBFKwUGNQe0+ElDutAZY05QSh+Zw+jnqqbRS7F5lOL3YJNRZQ/znxQuwqQbme97ZJeUAJI+jfX2bBOnV6/+jEYL59mLnXfxqqICvklsZgI2oOdJL498qLj5JjXFPStUdwIx0fn1UK3OeeNcdSWXo3X2psm8OcAD6+LbuKGlUQd2egbnAAns5sjt2zm4R9PXVySq9GtuXC7AyqhtXbqCgF4siV4eLP7wN6EIttWy71Ri679Ga/wUBHx0GDhFNy6J5xOzluKLxO3Iytbo2PsjD4zoAgqYv4n3pyzWci6gSMzXaUwpfD6dgNjSwzUjRXaVAAAI7RPXeQQ1wegLSKxEkQjRL06WP6+RLWcEcACrZsvxb5F5yYAgHG815M7KdkK+Tt+F389dbcan8TgY0NniGdF4SsSF1QOWKaaxmcNVp6uTU0zLO+m2VOMnXVQElKaEHWRDvYsMAqAYXlY9VLnlzsx7+Fie5RSOZzGVBlEolGgZpsjYc7aUoTqPsbc69q4XdcB8KcGamgP8tLyBN8n/v+C5wQAuJE/co0uqpmHTEmkV91MJfY4TbEIU0mdhv65pq7Q3yTTslhE+KZh4FZySgEBWgJjiZ9a0pHjYa9cOu7NQQ2OX/Ef6kw36VvUFYdx+ntkfLAhSMNRGjYc2il0U2w8SnAKMxt53oFR1/RZx0/Ksl9AfqUS1M5tZ949tfTG1wJau/R5XmslG9RTsW3m8uQAA=" alt="" width="128" height="128" decoding="async" onerror="this.remove()"></span><span class="label">Q2.png</span><span class="meta size">63.0 kB</span><span class="meta date">27 Oct 2024  15:18</span></a></li>
 </ul>
 <div class="placeholder" id="no-match" hidden><svg class="svg-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><circle cx="7" cy="7" r="4.6"/><path d="m10.6 10.6 3.2 3.2"/></svg><strong>No results found</strong><span>Try a different search.</span></div>
 </main>
@@ -452,6 +455,20 @@ body {
     var saved = localStorage.getItem('index-view');
     if (saved === 'grid' || saved === 'list') setView(saved, false);
   } catch (e) {}
+
+  var win = document.querySelector('.window');
+  var sidebarBtn = document.getElementById('sidebar-btn');
+  function setSidebar(shown, remember) {
+    win.classList.toggle('no-sidebar', !shown);
+    if (sidebarBtn) sidebarBtn.setAttribute('aria-pressed', shown ? 'true' : 'false');
+    if (remember) { try { localStorage.setItem('index-sidebar', shown ? 'on' : 'off'); } catch (e) {} }
+  }
+  function toggleSidebar() { setSidebar(win.classList.contains('no-sidebar'), true); }
+  if (sidebarBtn) sidebarBtn.addEventListener('click', toggleSidebar);
+  try { if (localStorage.getItem('index-sidebar') === 'off') setSidebar(false, false); } catch (e) {}
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'F9') { e.preventDefault(); toggleSidebar(); }
+  });
 
   if (!box) return;
 

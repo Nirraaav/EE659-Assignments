@@ -249,6 +249,8 @@ body {
 .sb-item .svg-icon { flex: none; width: 17px; height: 17px; }
 .sb-item span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
+.window.no-sidebar .sidebar { display: none; }
+
 .content { flex: 1; min-width: 0; }
 
 /* ---------- items ---------- */
@@ -390,7 +392,7 @@ body {
 @media (max-width: 780px) {
   body { padding: 0; }
   .window { min-height: 100vh; border: 0; border-radius: 0; box-shadow: none; }
-  .sidebar, .hint { display: none; }
+  .sidebar, .hint, #sidebar-btn { display: none; }
 }
 @media (max-width: 480px) {
   [data-view="list"] .listhead, [data-view="list"] .item a { grid-template-columns: 24px minmax(0, 1fr) 88px; }
@@ -402,6 +404,7 @@ body {
 <h1 class="sr-only">Assignment-3</h1>
 <div class="window">
 <header class="headerbar">
+<button class="btn" type="button" id="sidebar-btn" aria-pressed="true" aria-label="Toggle sidebar" title="Toggle sidebar (F9)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1.8" y="2.8" width="12.4" height="10.4" rx="2"/><path d="M6.4 2.8v10.4"/></svg></button>
 <div class="linked"><a class="btn" href="../index.html" aria-label="Back" title="Back"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3 5 8l5 5"/></svg></a><button class="btn" type="button" disabled aria-label="Forward"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m6 3 5 5-5 5"/></svg></button></div>
 <nav class="pathbar" aria-label="Location"><a href="../index.html">Assignments</a><span class="sep">/</span><span class="current" aria-current="page">Assignment-3</span></nav>
 <div class="hb-end"><button class="btn" type="button" id="search-btn" aria-expanded="false" aria-label="Search this folder" title="Search (Ctrl+F)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="7" cy="7" r="4.6"/><path d="m10.6 10.6 3.2 3.2"/></svg></button><div class="linked"><button class="btn active" type="button" data-set-view="grid" aria-pressed="true" aria-label="Icon view" title="Icon view"><svg viewBox="0 0 16 16" fill="currentColor"><rect x="2" y="2" width="5" height="5" rx="1.3"/><rect x="9" y="2" width="5" height="5" rx="1.3"/><rect x="2" y="9" width="5" height="5" rx="1.3"/><rect x="9" y="9" width="5" height="5" rx="1.3"/></svg></button><button class="btn" type="button" data-set-view="list" aria-pressed="false" aria-label="List view" title="List view"><svg viewBox="0 0 16 16" fill="currentColor"><rect x="2" y="3" width="2.4" height="2.4" rx=".8"/><rect x="6" y="3.4" width="8" height="1.6" rx=".8"/><rect x="2" y="6.8" width="2.4" height="2.4" rx=".8"/><rect x="6" y="7.2" width="8" height="1.6" rx=".8"/><rect x="2" y="10.6" width="2.4" height="2.4" rx=".8"/><rect x="6" y="11" width="8" height="1.6" rx=".8"/></svg></button></div></div>
@@ -418,7 +421,7 @@ body {
 <ul class="items">
 <li class="item file" data-name="23b3307 - nirav bhattad - ee659 assignment 3.pdf"><a href="23B3307 - Nirav Bhattad - EE659 Assignment 3.pdf" title="23B3307 - Nirav Bhattad - EE659 Assignment 3.pdf — 7.5 MB — 16 Oct 2024  02:23"><span class="icon" style="--type:var(--c-red)"><svg class="svg-icon" viewBox="0 0 52 64" aria-hidden="true"><path fill="var(--page)" stroke="var(--edge)" d="M4.5 6.5a4 4 0 0 1 4-4h22l17 17v38a4 4 0 0 1-4 4h-35a4 4 0 0 1-4-4z"/><path fill="var(--page-fold)" d="M30.5 2.5l17 17H34.5a4 4 0 0 1-4-4z"/><rect x="4.5" y="38" width="43" height="15" rx="1.5" fill="var(--type)"/></svg><span class="ext">PDF</span></span><span class="label">23B3307 - Nirav Bhattad - EE659 Assignment 3.pdf</span><span class="meta size">7.5 MB</span><span class="meta date">16 Oct 2024  02:23</span></a></li>
 <li class="item file" data-name="main.py"><a href="main.py" title="main.py — 8.8 kB — 20 Nov 2024  13:17"><span class="icon" style="--type:var(--c-yellow)"><svg class="svg-icon" viewBox="0 0 52 64" aria-hidden="true"><path fill="var(--page)" stroke="var(--edge)" d="M4.5 6.5a4 4 0 0 1 4-4h22l17 17v38a4 4 0 0 1-4 4h-35a4 4 0 0 1-4-4z"/><path fill="var(--page-fold)" d="M30.5 2.5l17 17H34.5a4 4 0 0 1-4-4z"/><rect x="4.5" y="38" width="43" height="15" rx="1.5" fill="var(--type)"/></svg><span class="ext">PY</span></span><span class="label">main.py</span><span class="meta size">8.8 kB</span><span class="meta date">20 Nov 2024  13:17</span></a></li>
-<li class="item file" data-name="q5 (b).png"><a href="Q5 (b).png" title="Q5 (b).png — 42.7 kB — 08 Oct 2024  22:27"><span class="icon thumb" style="--type:var(--c-pink)"><svg class="svg-icon" viewBox="0 0 52 64" aria-hidden="true"><path fill="var(--page)" stroke="var(--edge)" d="M4.5 6.5a4 4 0 0 1 4-4h22l17 17v38a4 4 0 0 1-4 4h-35a4 4 0 0 1-4-4z"/><path fill="var(--page-fold)" d="M30.5 2.5l17 17H34.5a4 4 0 0 1-4-4z"/><rect x="4.5" y="38" width="43" height="15" rx="1.5" fill="var(--type)"/></svg><span class="ext">PNG</span><img src="Q5 (b).png" alt="" loading="lazy" onerror="this.remove()"></span><span class="label">Q5 (b).png</span><span class="meta size">42.7 kB</span><span class="meta date">08 Oct 2024  22:27</span></a></li>
+<li class="item file" data-name="q5 (b).png"><a href="Q5 (b).png" title="Q5 (b).png — 42.7 kB — 08 Oct 2024  22:27"><span class="icon thumb" style="--type:var(--c-pink)"><svg class="svg-icon" viewBox="0 0 52 64" aria-hidden="true"><path fill="var(--page)" stroke="var(--edge)" d="M4.5 6.5a4 4 0 0 1 4-4h22l17 17v38a4 4 0 0 1-4 4h-35a4 4 0 0 1-4-4z"/><path fill="var(--page-fold)" d="M30.5 2.5l17 17H34.5a4 4 0 0 1-4-4z"/><rect x="4.5" y="38" width="43" height="15" rx="1.5" fill="var(--type)"/></svg><span class="ext">PNG</span><img src="data:image/webp;base64,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" alt="" width="128" height="128" decoding="async" onerror="this.remove()"></span><span class="label">Q5 (b).png</span><span class="meta size">42.7 kB</span><span class="meta date">08 Oct 2024  22:27</span></a></li>
 </ul>
 <div class="placeholder" id="no-match" hidden><svg class="svg-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><circle cx="7" cy="7" r="4.6"/><path d="m10.6 10.6 3.2 3.2"/></svg><strong>No results found</strong><span>Try a different search.</span></div>
 </main>
@@ -454,6 +457,20 @@ body {
     var saved = localStorage.getItem('index-view');
     if (saved === 'grid' || saved === 'list') setView(saved, false);
   } catch (e) {}
+
+  var win = document.querySelector('.window');
+  var sidebarBtn = document.getElementById('sidebar-btn');
+  function setSidebar(shown, remember) {
+    win.classList.toggle('no-sidebar', !shown);
+    if (sidebarBtn) sidebarBtn.setAttribute('aria-pressed', shown ? 'true' : 'false');
+    if (remember) { try { localStorage.setItem('index-sidebar', shown ? 'on' : 'off'); } catch (e) {} }
+  }
+  function toggleSidebar() { setSidebar(win.classList.contains('no-sidebar'), true); }
+  if (sidebarBtn) sidebarBtn.addEventListener('click', toggleSidebar);
+  try { if (localStorage.getItem('index-sidebar') === 'off') setSidebar(false, false); } catch (e) {}
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'F9') { e.preventDefault(); toggleSidebar(); }
+  });
 
   if (!box) return;
 
