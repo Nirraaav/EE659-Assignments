@@ -4,12 +4,510 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Assignment-1</title>
+<style>
+/* Catppuccin Latte */
+:root {
+  color-scheme: light dark;
+  --base: #eff1f5;
+  --mantle: #e6e9ef;
+  --crust: #dce0e8;
+  --surface0: #ccd0da;
+  --surface1: #bcc0cc;
+  --text: #4c4f69;
+  --subtext: #6c6f85;
+  --overlay: #8c8fa1;
+  --accent: #8839ef;
+  --accent-soft: rgba(136, 57, 239, .13);
+  --accent-fg: #eff1f5;
+  --c-blue: #1e66f5;
+  --c-lavender: #7287fd;
+  --c-sapphire: #209fb5;
+  --c-green: #40a02b;
+  --c-yellow: #df8e1d;
+  --c-peach: #fe640b;
+  --c-red: #d20f39;
+  --c-pink: #ea76cb;
+  --c-overlay: #8c8fa1;
+  --type-fg: #ffffff;
+  --page: #ffffff;
+  --page-fold: #ccd0da;
+  --edge: rgba(76, 79, 105, .18);
+  --hover: rgba(76, 79, 105, .07);
+  --glow: radial-gradient(1100px 520px at 18% -12%, rgba(136, 57, 239, .16), transparent 70%),
+          radial-gradient(900px 460px at 92% 8%, rgba(32, 159, 181, .14), transparent 70%);
+  --shadow: 0 24px 70px rgba(76, 79, 105, .22), 0 2px 10px rgba(76, 79, 105, .10);
+}
+
+/* Catppuccin Mocha */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --base: #1e1e2e;
+    --mantle: #181825;
+    --crust: #11111b;
+    --surface0: #313244;
+    --surface1: #45475a;
+    --text: #cdd6f4;
+    --subtext: #a6adc8;
+    --overlay: #7f849c;
+    --accent: #cba6f7;
+    --accent-soft: rgba(203, 166, 247, .16);
+    --accent-fg: #1e1e2e;
+    --c-blue: #89b4fa;
+    --c-lavender: #b4befe;
+    --c-sapphire: #74c7ec;
+    --c-green: #a6e3a1;
+    --c-yellow: #f9e2af;
+    --c-peach: #fab387;
+    --c-red: #f38ba8;
+    --c-pink: #f5c2e7;
+    --c-overlay: #7f849c;
+    --type-fg: #11111b;
+    --page: #45475a;
+    --page-fold: #313244;
+    --edge: rgba(205, 214, 244, .16);
+    --hover: rgba(205, 214, 244, .07);
+    --glow: radial-gradient(1100px 520px at 18% -12%, rgba(203, 166, 247, .13), transparent 70%),
+            radial-gradient(900px 460px at 92% 8%, rgba(116, 199, 236, .10), transparent 70%);
+    --shadow: 0 24px 70px rgba(0, 0, 0, .55), 0 2px 10px rgba(0, 0, 0, .35);
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  padding: 36px 24px 52px;
+  min-height: 100vh;
+  background: var(--glow), var(--crust);
+  background-attachment: fixed;
+  color: var(--text);
+  font: 14px/1.45 Inter, "SF Pro Text", system-ui, -apple-system, "Segoe UI", Roboto,
+        Ubuntu, Cantarell, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  scrollbar-width: thin;
+  scrollbar-color: var(--surface1) transparent;
+}
+
+.mono, .pathbar a, .pathbar .current, .meta, .statusbar, .listhead {
+  font-family: ui-monospace, "JetBrains Mono", "Fira Code", "SFMono-Regular", Menlo, Consolas, monospace;
+}
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+/* ---------- window ---------- */
+
+.window {
+  max-width: 1060px;
+  margin: 0 auto;
+  min-height: min(76vh, 620px);
+  display: flex;
+  flex-direction: column;
+  background: var(--base);
+  border: 1px solid var(--edge);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.headerbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 9px 12px;
+  min-height: 50px;
+  background: var(--mantle);
+  border-bottom: 1px solid var(--edge);
+}
+
+.lights { display: flex; gap: 7px; flex: none; }
+.lights i { width: 12px; height: 12px; border-radius: 50%; display: block; }
+.lights .r { background: var(--c-red); }
+.lights .y { background: var(--c-yellow); }
+.lights .g { background: var(--c-green); }
+
+.hb-end { display: flex; align-items: center; gap: 8px; margin-left: auto; }
+
+/* buttons */
+
+.btn {
+  display: grid;
+  place-items: center;
+  width: 32px; height: 30px;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: var(--surface0);
+  color: var(--subtext);
+  cursor: pointer;
+  transition: background .12s, color .12s;
+}
+.btn:hover { background: var(--surface1); color: var(--text); }
+.btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.btn.active { background: var(--accent); color: var(--accent-fg); }
+.btn[disabled] { opacity: .38; cursor: default; }
+.btn[disabled]:hover { background: var(--surface0); color: var(--subtext); }
+.btn svg { width: 16px; height: 16px; }
+
+.linked { display: flex; gap: 2px; padding: 2px; border-radius: 10px; background: var(--surface0); }
+.linked .btn { background: transparent; }
+.linked .btn:hover { background: var(--hover); }
+.linked .btn.active, .linked .btn.active:hover { background: var(--accent); color: var(--accent-fg); }
+
+/* path bar */
+
+.pathbar {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  min-width: 0;
+  padding: 3px;
+  border-radius: 9px;
+  background: var(--surface0);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.pathbar::-webkit-scrollbar { display: none; }
+.pathbar a, .pathbar .current {
+  display: block;
+  padding: 3px 10px;
+  border-radius: 6px;
+  font-size: 12.5px;
+  color: var(--subtext);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.pathbar a:hover { background: var(--hover); color: var(--text); }
+.pathbar a:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.pathbar .current { background: var(--accent); color: var(--accent-fg); font-weight: 600; }
+.pathbar .sep { color: var(--overlay); font-size: 11px; }
+
+/* search */
+
+.searchbar {
+  display: flex;
+  justify-content: center;
+  padding: 9px 14px;
+  background: var(--mantle);
+  border-bottom: 1px solid var(--edge);
+}
+.searchbar[hidden] { display: none; }
+.entry { position: relative; width: 100%; max-width: 460px; }
+.entry > svg {
+  position: absolute;
+  left: 10px; top: 50%;
+  transform: translateY(-50%);
+  width: 15px; height: 15px;
+  color: var(--overlay);
+  pointer-events: none;
+}
+.entry input {
+  width: 100%;
+  padding: 7px 12px 7px 32px;
+  border: 1px solid var(--edge);
+  border-radius: 9px;
+  background: var(--base);
+  color: inherit;
+  font: inherit;
+  font-size: 13.5px;
+  outline: none;
+}
+.entry input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+
+/* ---------- body ---------- */
+
+.body { display: flex; flex: 1; min-height: 0; }
+
+.sidebar {
+  flex: none;
+  width: 212px;
+  padding: 12px 10px;
+  background: var(--mantle);
+  border-right: 1px solid var(--edge);
+}
+.sb-title {
+  padding: 10px 10px 6px;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--overlay);
+}
+.sb-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 13.5px;
+  color: var(--text);
+  text-decoration: none;
+}
+.sb-item:hover { background: var(--hover); }
+.sb-item:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.sb-item.selected { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+.sb-item .glyph { flex: none; width: 16px; height: 16px; color: var(--overlay); }
+.sb-item.selected .glyph { color: var(--accent); }
+.sb-item .svg-icon { flex: none; width: 17px; height: 17px; }
+.sb-item span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.content { flex: 1; min-width: 0; }
+
+/* ---------- items ---------- */
+
+.listhead {
+  display: none;
+  gap: 14px;
+  padding: 12px 24px 8px;
+  border-bottom: 1px solid var(--edge);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--overlay);
+}
+[data-view="list"] .listhead { display: grid; grid-template-columns: 24px minmax(0, 1fr) 96px 168px; }
+
+.items { list-style: none; margin: 0; padding: 0; }
+.item[hidden] { display: none; }
+.item a {
+  color: inherit;
+  text-decoration: none;
+  border-radius: 10px;
+  transition: background .1s, color .1s;
+}
+.item a:hover { background: var(--hover); }
+.item a:active, .item a:focus-visible { background: var(--accent); color: var(--accent-fg); outline: none; }
+.item a:active .meta, .item a:focus-visible .meta { color: var(--accent-fg); opacity: .8; }
+
+.icon { position: relative; flex: none; }
+.svg-icon { display: block; width: 100%; height: 100%; }
+.ext {
+  position: absolute;
+  left: 16.4%; right: 16.4%;
+  top: 59.4%; height: 23.4%;
+  display: grid;
+  place-items: center;
+  color: var(--type-fg);
+  font-family: ui-monospace, "JetBrains Mono", "Fira Code", Menlo, Consolas, monospace;
+  font-size: 10px;
+  font-weight: 700;
+}
+.thumb img {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  border-radius: 5px;
+  box-shadow: 0 0 0 1px var(--edge);
+  background: var(--surface0);
+}
+
+/* icon (grid) view */
+
+[data-view="grid"] .items {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(116px, 1fr));
+  gap: 2px;
+  padding: 18px;
+}
+[data-view="grid"] .item a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 6px 15px;
+  text-align: center;
+}
+[data-view="grid"] .icon { width: 58px; height: 58px; }
+[data-view="grid"] .label {
+  font-size: 12.5px;
+  line-height: 1.35;
+  max-width: 100%;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+}
+[data-view="grid"] .meta { display: none; }
+
+/* list view */
+
+[data-view="list"] .items { padding: 8px 12px 16px; }
+[data-view="list"] .item a {
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr) 96px 168px;
+  align-items: center;
+  gap: 14px;
+  padding: 6px 12px;
+  border-radius: 8px;
+}
+[data-view="list"] .icon { width: 24px; height: 24px; }
+[data-view="list"] .ext { display: none; }
+[data-view="list"] .label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 13.5px; }
+[data-view="list"] .meta { font-size: 12px; color: var(--subtext); white-space: nowrap; }
+
+/* empty states */
+
+.placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 76px 20px;
+  text-align: center;
+  color: var(--subtext);
+}
+.placeholder[hidden] { display: none; }
+.placeholder .svg-icon { width: 76px; height: 76px; opacity: .4; margin-bottom: 8px; }
+.placeholder strong { font-size: 16.5px; font-weight: 700; color: var(--text); }
+.placeholder span { font-size: 13px; }
+
+/* status bar */
+
+.statusbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 8px 16px;
+  background: var(--mantle);
+  border-top: 1px solid var(--edge);
+  font-size: 11.5px;
+  color: var(--subtext);
+}
+.statusbar kbd {
+  padding: 1px 5px;
+  border: 1px solid var(--edge);
+  border-radius: 5px;
+  background: var(--surface0);
+  font: inherit;
+  font-size: 10.5px;
+  color: var(--text);
+}
+.hint { display: flex; align-items: center; gap: 6px; }
+
+@media (max-width: 780px) {
+  body { padding: 0; }
+  .window { min-height: 100vh; border: 0; border-radius: 0; box-shadow: none; }
+  .sidebar, .lights, .hint { display: none; }
+}
+@media (max-width: 480px) {
+  [data-view="list"] .listhead, [data-view="list"] .item a { grid-template-columns: 24px minmax(0, 1fr) 88px; }
+  [data-view="list"] .date { display: none; }
+}
+</style>
 </head>
 <body>
-<h1>Assignment-1</h1>
-<ul>
-<li><a href="23B3307 - Nirav Bhattad - EE659 Assignment 1.pdf">23B3307 - Nirav Bhattad - EE659 Assignment 1.pdf</a></li>
+<h1 class="sr-only">Assignment-1</h1>
+<div class="window">
+<header class="headerbar">
+<div class="lights" aria-hidden="true"><i class="r"></i><i class="y"></i><i class="g"></i></div>
+<div class="linked"><a class="btn" href="../index.html" aria-label="Back" title="Back"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3 5 8l5 5"/></svg></a><button class="btn" type="button" disabled aria-label="Forward"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m6 3 5 5-5 5"/></svg></button></div>
+<nav class="pathbar" aria-label="Location"><a href="../index.html">Assignments</a><span class="sep">/</span><span class="current" aria-current="page">Assignment-1</span></nav>
+<div class="hb-end"><button class="btn" type="button" id="search-btn" aria-expanded="false" aria-label="Search this folder" title="Search (Ctrl+F)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="7" cy="7" r="4.6"/><path d="m10.6 10.6 3.2 3.2"/></svg></button><div class="linked"><button class="btn active" type="button" data-set-view="grid" aria-pressed="true" aria-label="Icon view" title="Icon view"><svg viewBox="0 0 16 16" fill="currentColor"><rect x="2" y="2" width="5" height="5" rx="1.3"/><rect x="9" y="2" width="5" height="5" rx="1.3"/><rect x="2" y="9" width="5" height="5" rx="1.3"/><rect x="9" y="9" width="5" height="5" rx="1.3"/></svg></button><button class="btn" type="button" data-set-view="list" aria-pressed="false" aria-label="List view" title="List view"><svg viewBox="0 0 16 16" fill="currentColor"><rect x="2" y="3" width="2.4" height="2.4" rx=".8"/><rect x="6" y="3.4" width="8" height="1.6" rx=".8"/><rect x="2" y="6.8" width="2.4" height="2.4" rx=".8"/><rect x="6" y="7.2" width="8" height="1.6" rx=".8"/><rect x="2" y="10.6" width="2.4" height="2.4" rx=".8"/><rect x="6" y="11" width="8" height="1.6" rx=".8"/></svg></button></div></div>
+</header>
+<div class="searchbar" id="searchbar" hidden><div class="entry"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="7" cy="7" r="4.6"/><path d="m10.6 10.6 3.2 3.2"/></svg><input id="filter" type="text" placeholder="Search this folder…" autocomplete="off" spellcheck="false" aria-label="Search this folder"></div></div>
+<div class="body">
+<aside class="sidebar">
+<div class="sb-title">Places</div>
+<a class="sb-item" href="../index.html"><svg class="glyph" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M2.5 7.2 8 2.5l5.5 4.7V13a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5z"/></svg><span>Assignments</span></a>
+<a class="sb-item" href="../index.html"><svg class="glyph" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8 13V3.5"/><path d="m4 7.5 4-4 4 4"/></svg><span>Parent folder</span></a>
+</aside>
+<main class="content" id="content" data-view="grid">
+<div class="listhead"><span></span><span>Name</span><span>Size</span><span>Modified</span></div>
+<ul class="items">
+<li class="item file" data-name="23b3307 - nirav bhattad - ee659 assignment 1.pdf"><a href="23B3307 - Nirav Bhattad - EE659 Assignment 1.pdf" title="23B3307 - Nirav Bhattad - EE659 Assignment 1.pdf — 1.0 MB — 08 Nov 2024  18:21"><span class="icon" style="--type:var(--c-red)"><svg class="svg-icon" viewBox="0 0 52 64" aria-hidden="true"><path fill="var(--page)" stroke="var(--edge)" d="M4.5 6.5a4 4 0 0 1 4-4h22l17 17v38a4 4 0 0 1-4 4h-35a4 4 0 0 1-4-4z"/><path fill="var(--page-fold)" d="M30.5 2.5l17 17H34.5a4 4 0 0 1-4-4z"/><rect x="4.5" y="38" width="43" height="15" rx="1.5" fill="var(--type)"/></svg><span class="ext">PDF</span></span><span class="label">23B3307 - Nirav Bhattad - EE659 Assignment 1.pdf</span><span class="meta size">1.0 MB</span><span class="meta date">08 Nov 2024  18:21</span></a></li>
 </ul>
-<a href="../index.html">Back to previous page</a>
+<div class="placeholder" id="no-match" hidden><svg class="svg-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><circle cx="7" cy="7" r="4.6"/><path d="m10.6 10.6 3.2 3.2"/></svg><strong>No results found</strong><span>Try a different search.</span></div>
+</main>
+</div>
+<footer class="statusbar"><span id="status-left">0 folders, 1 file</span><span class="hint">Type to search <kbd>/</kbd></span><span>05 Mar 2025  15:06</span></footer>
+</div>
+<script>
+(function () {
+  var content = document.getElementById('content');
+  if (!content) return;
+  var items = Array.prototype.slice.call(document.querySelectorAll('.item'));
+  var bar = document.getElementById('searchbar');
+  var box = document.getElementById('filter');
+  var searchBtn = document.getElementById('search-btn');
+  var noMatch = document.getElementById('no-match');
+  var status = document.getElementById('status-left');
+  var baseStatus = status ? status.textContent : '';
+
+  var viewButtons = Array.prototype.slice.call(document.querySelectorAll('[data-set-view]'));
+  function setView(view, remember) {
+    content.setAttribute('data-view', view);
+    viewButtons.forEach(function (b) {
+      var on = b.getAttribute('data-set-view') === view;
+      b.classList.toggle('active', on);
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+    if (remember) { try { localStorage.setItem('index-view', view); } catch (e) {} }
+  }
+  viewButtons.forEach(function (b) {
+    b.addEventListener('click', function () { setView(b.getAttribute('data-set-view'), true); });
+  });
+  try {
+    var saved = localStorage.getItem('index-view');
+    if (saved === 'grid' || saved === 'list') setView(saved, false);
+  } catch (e) {}
+
+  if (!box) return;
+
+  function filter() {
+    var q = box.value.trim().toLowerCase();
+    var shown = 0;
+    items.forEach(function (item) {
+      var match = !q || item.getAttribute('data-name').indexOf(q) !== -1;
+      item.hidden = !match;
+      if (match) shown++;
+    });
+    if (noMatch) noMatch.hidden = shown > 0;
+    if (status) status.textContent = q ? shown + ' of ' + items.length + ' items' : baseStatus;
+  }
+
+  function openSearch(seed) {
+    bar.hidden = false;
+    searchBtn.classList.add('active');
+    searchBtn.setAttribute('aria-expanded', 'true');
+    if (seed) box.value = seed;
+    box.focus();
+    if (seed) filter();
+  }
+
+  function closeSearch() {
+    bar.hidden = true;
+    searchBtn.classList.remove('active');
+    searchBtn.setAttribute('aria-expanded', 'false');
+    box.value = '';
+    filter();
+  }
+
+  box.addEventListener('input', filter);
+  searchBtn.addEventListener('click', function () {
+    if (bar.hidden) { openSearch(); } else { closeSearch(); searchBtn.focus(); }
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') {
+      if (!bar.hidden) { closeSearch(); searchBtn.focus(); }
+      return;
+    }
+    if (e.target === box) return;
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'f') { e.preventDefault(); openSearch(); return; }
+    if (e.ctrlKey || e.metaKey || e.altKey) return;
+    if (e.key === '/') { e.preventDefault(); openSearch(); return; }
+    // type-ahead: any printable key starts a search, like a real file manager
+    if (e.key.length === 1 && /\S/.test(e.key)) { e.preventDefault(); openSearch(e.key); }
+  });
+})();
+</script>
 </body>
 </html>
